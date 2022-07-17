@@ -26,5 +26,5 @@ cargo b --release
 ```
 Move binary to local binary directory
 ```
-sudo mv free-macos /usr/local/bin/
+sudo mv target/release/free /usr/local/bin/
 ```
