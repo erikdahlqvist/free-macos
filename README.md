@@ -22,7 +22,7 @@ cd free-macos
 ```
 Compile release build
 ```
-cargo b --release
+cargo b -r
 ```
 Move binary to local binary directory
 ```
