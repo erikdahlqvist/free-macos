@@ -32,6 +32,7 @@ fn main() {
 
     if args.len() > 1 {
         memory_prefix = match args[1].to_string().as_ref() {
+            "-b" => 1,
             "-k" => 1024,
             "-m" => 1048576,
             "-g" => 1073741824,
