@@ -1,5 +1,4 @@
-use std::process::Command;
-use std::env;
+use std::{env, str, process};
 
 fn parse_digits(t_num: &str) -> Vec<u32> {
 
@@ -23,41 +22,48 @@ fn join_nums(nums: Vec<u32>, sep: &str) -> u64 {
     
 }
 
+fn help_message() {
+    println!("-h, lists arguments");
+    println!("-b, displays memory info in bytes");
+    println!("-k, displays memory info in kilobytes (default)");
+    println!("-m, displays memory info in megabytes");
+    println!("-g, displays memory info in gigabytes");
+
+    process::exit(1);
+}
 
 fn main() {
 
     let args: Vec<String> = env::args().collect();
 
-    let memory_prefix: u64;
+    let mut memory_prefix: u64 = 1024;
 
     if args.len() > 1 {
-        memory_prefix = match args[1].to_string().as_ref() {
-            "-b" => 1,
-            "-k" => 1024,
-            "-m" => 1048576,
-            "-g" => 1073741824,
-            _ => 1024
+        match args[1].to_string().as_ref() {
+            "-h" => help_message(),
+            "-b" => memory_prefix = 1,
+            "-k" => memory_prefix = 1024,
+            "-m" => memory_prefix = 1048576,
+            "-g" => memory_prefix = 1073741824,
+            _ => memory_prefix = 1024
         };
     }
-    else {
-        memory_prefix = 1024;
-    }
     
-    let vm_stat_output = Command::new("sh")
+    let vm_stat_output = process::Command::new("sh")
         .arg("-c")
         .arg("vm_stat")
         .output()
         .expect("no work");
     
-    let sysctl_output = Command::new("sh")
+    let sysctl_output = process::Command::new("sh")
         .arg("-c")
         .arg("sysctl hw.memsize")
         .output()
         .expect("no work")
         .stdout;
     
-    let mut lines = std::str::from_utf8(&vm_stat_output.stdout).unwrap().lines();
-    let line_length = std::str::from_utf8(&vm_stat_output.stdout).unwrap().lines().count();
+    let mut lines = str::from_utf8(&vm_stat_output.stdout).unwrap().lines();
+    let line_length = str::from_utf8(&vm_stat_output.stdout).unwrap().lines().count();
 
     let mut elements: Vec<u64> = vec![];
 
@@ -74,5 +80,7 @@ fn main() {
 
     println!("{0: <5} {1: >10} {2: >10} {3: >10} {4: >10}", "", "total", "active", "wired", "free");
     println!("{0: <5} {1: >10} {2: >10} {3: >10} {4: >10}", "Mem:", total_memory, active_memory, wired_memory, free_memory);
+
+    process::exit(1);
 
 }
