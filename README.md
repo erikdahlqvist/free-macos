@@ -2,6 +2,7 @@
 Free command but for MacOS
 
 # Prerequisites
+Have MacOS installed and access to Terminal <br><br>
 Rust and Cargo must be installed
 
 If not run
