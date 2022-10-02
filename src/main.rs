@@ -6,11 +6,11 @@ fn parse_digits(t_num: &str) -> Vec<u32> {
 
 }
 
-fn join_nums(nums: Vec<u32>, sep: &str) -> u64 {
+fn join_nums(nums: Vec<u32>) -> u64 {
 
     let str_nums: Vec<String> = nums.iter().map(|n| n.to_string()).collect();
 
-    str_nums.join(sep).parse::<u64>().unwrap()
+    str_nums.join("").parse::<u64>().unwrap()
 
 }
 
@@ -35,7 +35,7 @@ fn main() {
     let mut memory_prefix: u64 = 1024;
 
     if args.len() == 2 {
-        match args[1].to_string().as_ref() {
+        match args[1].as_str() {
             "-b" => memory_prefix = 1,
             "-k" => (),
             "-m" => memory_prefix = 1048576,
@@ -64,11 +64,11 @@ fn main() {
 
     for _x in 0..line_length {
 
-        elements.push(join_nums(parse_digits(lines.next().unwrap()), ""));
+        elements.push(join_nums(parse_digits(lines.next().unwrap())));
 
     }
 
-    let total_memory = join_nums(parse_digits(std::str::from_utf8(&sysctl_output).unwrap()), "") / memory_prefix;
+    let total_memory = join_nums(parse_digits(std::str::from_utf8(&sysctl_output).unwrap())) / memory_prefix;
     let active_memory = (elements[0] * elements[2]) / memory_prefix;
     let wired_memory = (elements[0] * elements[6]) / memory_prefix;
     let free_memory = (elements[0] * elements[1]) / memory_prefix;
