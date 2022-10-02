@@ -9,14 +9,10 @@ fn parse_digits(t_num: &str) -> Vec<u32> {
 
 fn join_nums(nums: Vec<u32>, sep: &str) -> u64 {
 
-    let str_nums: Vec<String> = nums.iter() 
-        .map(|n| n.to_string())
-        .collect();
+    let str_nums: Vec<String> = nums.iter().map(|n| n.to_string()).collect();
 
-    let joined_integer: u64 = str_nums.join(sep).parse::<u64>().unwrap();
+    str_nums.join(sep).parse::<u64>().unwrap()
 
-    return joined_integer;
-    
 }
 
 fn help_message() {
