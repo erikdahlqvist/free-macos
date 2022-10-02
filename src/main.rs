@@ -41,12 +41,11 @@ fn main() {
 
     if args.len() > 1 {
         match args[1].to_string().as_ref() {
-            "-h" => help_message(),
             "-b" => memory_prefix = 1,
-            "-k" => memory_prefix = 1024,
+            "-k" => (),
             "-m" => memory_prefix = 1048576,
             "-g" => memory_prefix = 1073741824,
-            _ => memory_prefix = 1024
+            _ => help_message(), 
         };
     }
     
