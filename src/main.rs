@@ -6,7 +6,6 @@ fn parse_digits(t_num: &str) -> Vec<u32> {
 
 }
 
-
 fn join_nums(nums: Vec<u32>, sep: &str) -> u64 {
 
     let str_nums: Vec<String> = nums.iter().map(|n| n.to_string()).collect();
@@ -35,7 +34,7 @@ fn main() {
 
     let mut memory_prefix: u64 = 1024;
 
-    if args.len() > 1 {
+    if args.len() == 2 {
         match args[1].to_string().as_ref() {
             "-b" => memory_prefix = 1,
             "-k" => (),
@@ -44,16 +43,16 @@ fn main() {
             _ => help_message(), 
         };
     }
+
+    else if args.len() > 2 { help_message(); }
     
     let vm_stat_output = process::Command::new("sh")
-        .arg("-c")
-        .arg("vm_stat")
+        .args(["-c", "vm_stat"])
         .output()
         .expect("Something went wrong");
     
     let sysctl_output = process::Command::new("sh")
-        .arg("-c")
-        .arg("sysctl hw.memsize")
+        .args(["-c", "sysctl hw.memsize"])
         .output()
         .expect("Something went wrong")
         .stdout;
@@ -65,7 +64,7 @@ fn main() {
 
     for _x in 0..line_length {
 
-        elements.push(join_nums(parse_digits(lines.next().unwrap()), "").try_into().unwrap());
+        elements.push(join_nums(parse_digits(lines.next().unwrap()), ""));
 
     }
 
