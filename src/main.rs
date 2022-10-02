@@ -2,10 +2,7 @@ use std::{env, str, process};
 
 fn parse_digits(t_num: &str) -> Vec<u32> {
 
-    t_num
-        .chars()
-        .filter_map(|a| a.to_digit(10))
-        .collect()
+    t_num.chars().filter_map(|a| a.to_digit(10)).collect()
 
 }
 
@@ -23,13 +20,17 @@ fn join_nums(nums: Vec<u32>, sep: &str) -> u64 {
 }
 
 fn help_message() {
-    println!("-h, lists arguments");
-    println!("-b, displays memory info in bytes");
-    println!("-k, displays memory info in kilobytes (default)");
-    println!("-m, displays memory info in megabytes");
-    println!("-g, displays memory info in gigabytes");
 
-    process::exit(1);
+    println!("The following arguments exist:
+    -h, lists arguments
+    -b, displays memory info in bytes
+    -k, displays memory info in kilobytes (default)
+    -m, displays memory info in megabytes
+    -g, displays memory info in gigabytes"
+    );
+
+    process::exit(0);
+
 }
 
 fn main() {
@@ -53,13 +54,13 @@ fn main() {
         .arg("-c")
         .arg("vm_stat")
         .output()
-        .expect("no work");
+        .expect("Something went wrong");
     
     let sysctl_output = process::Command::new("sh")
         .arg("-c")
         .arg("sysctl hw.memsize")
         .output()
-        .expect("no work")
+        .expect("Something went wrong")
         .stdout;
     
     let mut lines = str::from_utf8(&vm_stat_output.stdout).unwrap().lines();
@@ -81,6 +82,6 @@ fn main() {
     println!("{0: <5} {1: >10} {2: >10} {3: >10} {4: >10}", "", "total", "active", "wired", "free");
     println!("{0: <5} {1: >10} {2: >10} {3: >10} {4: >10}", "Mem:", total_memory, active_memory, wired_memory, free_memory);
 
-    process::exit(1);
+    process::exit(0);
 
 }
