@@ -51,7 +51,8 @@ fn main() {
         .output()
         .expect("Something went wrong");
     
-    let sysctl_output: Vec<u8> = process::Command::new("sh").args(["-c", "sysctl hw.memsize"])
+    let sysctl_output: Vec<u8> = process::Command::new("sh")
+        .args(["-c", "sysctl hw.memsize"])
         .output()
         .expect("Something went wrong")
         .stdout;
