@@ -19,7 +19,7 @@ fn help_message() {
     println!("The following arguments exist:
     -h, lists arguments
     -b, displays memory info in bytes
-    -k, displays memory info in kilobytes (default)
+    -k, displays memory info in kilobytes [default]
     -m, displays memory info in megabytes
     -g, displays memory info in gigabytes"
     );
