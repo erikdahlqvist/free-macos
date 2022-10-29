@@ -27,5 +27,5 @@ cargo b -r
 ```
 Move binary to local binary directory
 ```
-sudo mv target/release/free /usr/local/bin/
+cargo install --path .
 ```
